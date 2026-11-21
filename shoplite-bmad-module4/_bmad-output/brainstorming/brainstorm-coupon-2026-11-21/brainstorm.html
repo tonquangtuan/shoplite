@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopLite Brainstorming Keepsake: Coupon Feature</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #38bdf8;
+      --accent: #a855f7;
+      --emerald: #10b981;
+      --rose: #f43f5e;
+      --amber: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top left, #1e1b4b, #0f172a 40%, #020617 100%);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    h1 { font-size: 2.4rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #38bdf8, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    p.lead { font-size: 1.1rem; color: var(--text-muted); max-width: 650px; margin: 0 auto; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 1.25rem;
+      border-radius: 12px;
+      text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .stat-num { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+    .stat-label { font-size: 0.85rem; color: var(--text-muted); }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 2rem 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .section-title span { color: var(--accent); }
+
+    .technique-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(8px);
+    }
+    .technique-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      border-bottom: 1px dashed var(--card-border);
+      padding-bottom: 0.75rem;
+    }
+    .technique-name { font-size: 1.2rem; font-weight: 700; color: #e2e8f0; }
+    .tag { font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 6px; }
+    .tag-role { background: #3b82f6; color: white; }
+    .tag-hmw { background: #8b5cf6; color: white; }
+    .tag-reverse { background: #f43f5e; color: white; }
+
+    .idea-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .idea-item {
+      background: rgba(15, 23, 42, 0.6);
+      border-left: 3px solid var(--primary);
+      padding: 0.75rem 1rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.95rem;
+    }
+    .idea-author {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.2rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* MoSCoW Grid */
+    .moscow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+    .moscow-col {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 1.25rem;
+      border: 1px solid var(--card-border);
+    }
+    .col-must { border-top: 4px solid var(--emerald); }
+    .col-should { border-top: 4px solid var(--primary); }
+    .col-could { border-top: 4px solid var(--amber); }
+    .col-wont { border-top: 4px solid var(--rose); }
+
+    .moscow-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .badge-must { color: var(--emerald); }
+    .badge-should { color: var(--primary); }
+    .badge-could { color: var(--amber); }
+    .badge-wont { color: var(--rose); }
+
+    .moscow-items { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .moscow-items li {
+      background: rgba(15, 23, 42, 0.5);
+      padding: 0.6rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">BMad Brainstorming Keepsake</div>
+      <h1>Mã Giảm Giá (Coupon) — ShopLite</h1>
+      <p class="lead">Từ ý tưởng thô tới phạm vi MVP được chuẩn hóa bằng MoSCoW trên nền tảng Next.js 16</p>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">Creative Partner</div>
+        <div class="stat-label">Chế độ cộng tác</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3 Techniques</div>
+        <div class="stat-label">Role Playing · HMW · Reverse</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5 Must-Haves</div>
+        <div class="stat-label">Phạm vi cốt lõi MVP</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">0 Ext Services</div>
+        <div class="stat-label">100% Native ShopLite</div>
+      </div>
+    </div>
+
+    <div class="section-title"><span>01.</span> Diễn biến 3 Kỹ thuật Sáng tạo</div>
+
+    <div class="technique-box">
+      <div class="technique-header">
+        <div class="technique-name">🎭 Role Playing (Nhập vai)</div>
+        <span class="tag tag-role">Góc nhìn đa chiều</span>
+      </div>
+      <ul class="idea-list">
+        <li class="idea-item">
+          <div class="idea-author"><span>Khách hàng săn deal</span><span>by coach</span></div>
+          Khay gợi ý mã giảm giá công khai 1-chạm trực tiếp ngay tại form checkout.
+        </li>
+        <li class="idea-item">
+          <div class="idea-author"><span>Khách hàng chưa đủ điều kiện</span><span>by coach</span></div>
+          Mã chưa đủ điều kiện được làm mờ kèm thanh tiến trình kích cầu "Mua thêm X đ để mở khóa mã".
+        </li>
+        <li class="idea-item">
+          <div class="idea-author"><span>Kế toán & Trải nghiệm</span><span>by coach</span></div>
+          Ngưỡng miễn phí giao hàng 500.000₫ tính trên tạm tính TRƯỚC khi trừ coupon để tránh mất freeship oan.
+        </li>
+        <li class="idea-item">
+          <div class="idea-author"><span>Kỹ sư hệ thống</span><span>by user & coach</span></div>
+          Chuẩn hóa mã case-insensitive và tự động trim khoảng trắng thừa (TET2026, tet2026 nhận diện như nhau).
+        </li>
+      </ul>
+    </div>
+
+    <div class="technique-box">
+      <div class="technique-header">
+        <div class="technique-name">💡 How Might We (Biến thách thức thành giải pháp)</div>
+        <span class="tag tag-hmw">Kiến trúc an toàn</span>
+      </div>
+      <ul class="idea-list">
+        <li class="idea-item">
+          <div class="idea-author"><span>Bảo mật dữ liệu tuyệt đối</span><span>by user & coach</span></div>
+          Payload POST /api/orders chỉ gửi couponCode chuỗi; Server tự tra cứu catalog tĩnh coupons.ts và tính toán lại 100% số tiền giảm.
+        </li>
+        <li class="idea-item">
+          <div class="idea-author"><span>Lịch sử đơn hàng bền vững</span><span>by coach</span></div>
+          Snapshot trực tiếp { couponCode, discountAmount } vào schema Order khi lưu storage/orders.json để bảo toàn dữ liệu lịch sử.
+        </li>
+        <li class="idea-item">
+          <div class="idea-author"><span>Xử lý thay đổi giỏ hàng</span><span>by coach</span></div>
+          Tự động gỡ mã kèm thông báo toast nếu khách thay đổi giỏ hàng khiến đơn không còn đạt mức tối thiểu.
+        </li>
+      </ul>
+    </div>
+
+    <div class="technique-box">
+      <div class="technique-header">
+        <div class="technique-name">🛡️ Reverse Brainstorming (Phòng ngừa thảm họa)</div>
+        <span class="tag tag-reverse">Khiên chắn rủi ro</span>
+      </div>
+      <ul class="idea-list">
+        <li class="idea-item">
+          <div class="idea-author"><span>Chặn tiền âm</span><span>by coach</span></div>
+          Số tiền giảm tối đa chỉ bằng subtotal, tổng tiền thanh toán luôn &ge; 0 (Math.min(discount, subtotal)).
+        </li>
+        <li class="idea-item">
+          <div class="idea-author"><span>Chống vỡ quỹ khuyến mãi</span><span>by coach</span></div>
+          Mã phần trăm bắt buộc có trần giảm giá tối đa (maxDiscountAmount).
+        </li>
+        <li class="idea-item">
+          <div class="idea-author"><span>Bảo toàn form submit</span><span>by coach</span></div>
+          Khi mã hết hạn vào phút chót, server trả lỗi chuẩn OrderError("COUPON_EXPIRED"), form giữ nguyên dữ liệu khách đã điền.
+        </li>
+        <li class="idea-item">
+          <div class="idea-author"><span>Tách biệt chi phí vận chuyển</span><span>by coach</span></div>
+          Giảm giá coupon CHỈ áp dụng lên subtotal, không bao giờ trừ vào shippingFee.
+        </li>
+      </ul>
+    </div>
+
+    <div class="section-title"><span>02.</span> Hội tụ MoSCoW: Phạm vi MVP ShopLite</div>
+
+    <div class="moscow-grid">
+      <div class="moscow-col col-must">
+        <div class="moscow-title">
+          <span>MUST-HAVE</span>
+          <span class="badge-must">5 Mục Cốt Lõi</span>
+        </div>
+        <ul class="moscow-items">
+          <li><strong>1. UI Checkout:</strong> Nhập mã, nút Áp dụng/Gỡ mã, trừ tiền tức thì (hỗ trợ % có trần & số tiền cố định).</li>
+          <li><strong>2. Server Recalculate:</strong> Server tự tính lại 100% từ coupons.ts, client chỉ gửi chuỗi couponCode.</li>
+          <li><strong>3. Bất biến giá:</strong> Giảm tối đa bằng subtotal (không âm), không trừ vào phí ship, freeship tính trước giảm.</li>
+          <li><strong>4. Order Snapshot:</strong> Lưu couponCode và discountAmount vào orders.json & hiển thị ở /orders/[id].</li>
+          <li><strong>5. Chuẩn hóa & Lỗi:</strong> Case-insensitive, auto-trim, thông báo lỗi rõ ràng theo từng lý do.</li>
+        </ul>
+      </div>
+
+      <div class="moscow-col col-should">
+        <div class="moscow-title">
+          <span>SHOULD-HAVE</span>
+          <span class="badge-should">Sprint tiếp theo</span>
+        </div>
+        <ul class="moscow-items">
+          <li>Khay gợi ý mã công khai 1-chạm tại trang checkout.</li>
+          <li>Thanh tiến trình kích cầu "Mua thêm X đ để mở khóa mã".</li>
+          <li>Lưu mã vào session/localStorage khi F5 hoặc back về giỏ.</li>
+          <li>Tự động gỡ mã khi giỏ hàng tụt dưới ngưỡng tối thiểu.</li>
+        </ul>
+      </div>
+
+      <div class="moscow-col col-could">
+        <div class="moscow-title">
+          <span>COULD-HAVE</span>
+          <span class="badge-could">Tương lai</span>
+        </div>
+        <ul class="moscow-items">
+          <li>Tự động chọn và áp dụng mã có lợi nhất (Auto-best).</li>
+          <li>Đồng hồ đếm ngược FOMO cho mã hết hạn trong 24h.</li>
+          <li>Hiệu ứng chúc mừng (confetti / toast) khi áp mã thành công.</li>
+        </ul>
+      </div>
+
+      <div class="moscow-col col-wont">
+        <div class="moscow-title">
+          <span>WON'T-HAVE</span>
+          <span class="badge-wont">Ngoài phạm vi MVP</span>
+        </div>
+        <ul class="moscow-items">
+          <li>Trang quản trị Admin để tạo/sửa mã (dùng file tĩnh).</li>
+          <li>Giới hạn số lượt dùng mỗi mã (tránh race condition).</li>
+          <li>Mã gắn riêng cho từng user (chưa có Auth).</li>
+          <li>Áp dụng gộp nhiều mã trong 1 đơn hàng.</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>
+      BMad Method · Brainstorming Session Keepsake · Dự án ShopLite · Next.js 16 App Router
+    </footer>
+  </div>
+</body>
+</html>
