@@ -31,5 +31,37 @@
     "subtotal": 1890000,
     "shippingFee": 0,
     "total": 1890000
+  },
+  {
+    "id": "SL-20261108-349E9C",
+    "status": "pending",
+    "createdAt": "2026-11-08T09:53:44.909Z",
+    "updatedAt": "2026-11-08T09:53:44.909Z",
+    "customer": {
+      "fullName": "Quang Tuấn Tôn",
+      "phone": "0912345678",
+      "email": "tonquanan@gmail.com",
+      "address": "Lý Thường Kiệt, Phường Minh Phụng"
+    },
+    "shippingMethod": "standard",
+    "paymentMethod": "cod",
+    "items": [
+      {
+        "productId": "p005",
+        "slug": "ban-phim-co-keypro-75",
+        "name": "Bàn phím cơ KeyPro 75%",
+        "image": {
+          "emoji": "⌨️",
+          "from": "#dcfce7",
+          "to": "#a7f3d0"
+        },
+        "unitPrice": 1890000,
+        "quantity": 1,
+        "lineTotal": 1890000
+      }
+    ],
+    "subtotal": 1890000,
+    "shippingFee": 0,
+    "total": 1890000
   }
 ]

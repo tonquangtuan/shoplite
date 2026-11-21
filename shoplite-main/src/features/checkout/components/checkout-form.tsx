@@ -102,8 +102,8 @@ export function CheckoutForm() {
 
   async function handleApplyCoupon() {
     setCouponError(null);
-    try {
-      const subtotal = items.reduce((sum, i) => sum + i.lineTotal, 0);
+    try {      
+	  const subtotal = items.reduce((sum, i) => sum + (i.price * i.quantity), 0);
       const result = await validateCoupon(couponInput, subtotal);
       setAppliedCoupon(result.coupon);
       setDiscountAmount(result.discountAmount);

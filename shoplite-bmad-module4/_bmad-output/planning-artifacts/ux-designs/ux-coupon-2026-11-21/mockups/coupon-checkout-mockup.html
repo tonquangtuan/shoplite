@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopLite - UX Mockup & Nguyên mẫu Giao diện Coupon</title>
+  <!-- Google Font: Be Vietnam Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Be Vietnam Pro', sans-serif; }
+    .device-frame {
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 12px #1e293b, 0 0 0 14px #475569;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Top Control Bar (BMad UX Showcase Toolbar) -->
+  <header class="bg-slate-800 border-b border-slate-700 px-4 py-3 sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="flex size-9 items-center justify-center rounded-xl bg-indigo-600 text-white font-bold text-lg shadow-sm">⚡</span>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-white font-semibold text-sm sm:text-base">ShopLite — Mockup Giao Diện Coupon (FR-1 → FR-8)</h1>
+            <span class="rounded-full bg-emerald-500/20 text-emerald-400 text-xs px-2.5 py-0.5 font-medium border border-emerald-500/30">UX Delta Spec</span>
+          </div>
+          <p class="text-slate-400 text-xs">Chuẩn Google Labs DESIGN.md + EXPERIENCE.md • Mobile-First 390px Viewport</p>
+        </div>
+      </div>
+
+      <!-- Quick Preset Controls -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs text-slate-400 font-medium mr-1 hidden lg:inline">Chuyển kịch bản mẫu:</span>
+        <button onclick="setScenario('idle')" id="btn-sc-idle" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white shadow-sm transition">1. Ô nhập rỗng</button>
+        <button onclick="setScenario('giam50k')" id="btn-sc-giam50k" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-700 text-slate-200 hover:bg-slate-600 transition">2. Đã áp dụng (GIAM50K)</button>
+        <button onclick="setScenario('shoplite10')" id="btn-sc-shoplite10" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-700 text-slate-200 hover:bg-slate-600 transition">3. Giảm 10% (SHOPLITE10)</button>
+        <button onclick="setScenario('err-min')" id="btn-sc-err-min" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-700 text-slate-200 hover:bg-slate-600 transition">4. Lỗi: Thiếu đơn tối thiểu</button>
+        <button onclick="setScenario('err-inv')" id="btn-sc-err-inv" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-700 text-slate-200 hover:bg-slate-600 transition">5. Lỗi: Mã không hợp lệ</button>
+        <button onclick="toggleView('orders')" id="btn-view-orders" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-purple-700 text-white hover:bg-purple-600 transition ml-2">📄 Xem Trang Đơn Hàng</button>
+      </div>
+
+      <!-- Viewport Switcher -->
+      <div class="flex items-center bg-slate-700/80 p-1 rounded-xl border border-slate-600 text-xs text-slate-300">
+        <button onclick="setViewport('mobile')" id="vp-mobile" class="px-3 py-1 rounded-lg bg-indigo-600 text-white font-medium shadow-sm transition flex items-center gap-1.5">
+          <span>📱</span> Mobile 390px
+        </button>
+        <button onclick="setViewport('desktop')" id="vp-desktop" class="px-3 py-1 rounded-lg hover:text-white font-medium transition flex items-center gap-1.5">
+          <span>💻</span> Desktop
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Showcase Container -->
+  <main class="flex-1 py-8 px-4 flex justify-center items-start overflow-x-auto">
+
+    <!-- FRAME WRAPPER -->
+    <div id="viewport-wrapper" class="w-[390px] transition-all duration-300">
+      
+      <!-- DEVICE CHASSIS (Cho chế độ Mobile) -->
+      <div id="device-container" class="device-frame rounded-[42px] overflow-hidden bg-slate-50 border-4 border-slate-800 transition-all duration-300">
+        
+        <!-- Mobile Speaker Bar / Dynamic Island simulation -->
+        <div id="mobile-top-bar" class="bg-white pt-3 pb-1 px-6 flex justify-between items-center text-xs text-slate-500 border-b border-slate-100 select-none">
+          <span class="font-semibold text-slate-800">9:41</span>
+          <div class="w-20 h-4 bg-slate-900 rounded-full mx-auto"></div>
+          <div class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.28 19.64 10.58 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+            <span class="text-[11px] font-bold">5G</span>
+            <div class="w-5 h-2.5 border border-slate-400 rounded-sm p-0.5 flex"><div class="bg-slate-800 w-full h-full rounded-2xs"></div></div>
+          </div>
+        </div>
+
+        <!-- APP CONTENT AREA -->
+        <div class="min-h-[750px] bg-slate-50 flex flex-col">
+          
+          <!-- ShopLite App Header -->
+          <nav class="bg-white border-b border-slate-200 px-4 py-3 sticky top-0 z-30 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-bold tracking-tight text-indigo-600">ShopLite</span>
+              <span class="text-xs bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded font-medium">Demo</span>
+            </div>
+            <div class="text-xs text-slate-500 font-medium">
+              Hotline: 1900-8888
+            </div>
+          </nav>
+
+          <!-- ============================================== -->
+          <!-- VIEW 1: TRANG THANH TOÁN (/checkout)           -->
+          <!-- ============================================== -->
+          <div id="view-checkout" class="p-4 flex-1 flex flex-col gap-4">
+            
+            <!-- Breadcrumb & Back -->
+            <div class="flex items-center gap-2 text-xs text-slate-500">
+              <span class="text-indigo-600 font-medium">Giỏ hàng</span>
+              <span>/</span>
+              <span class="text-slate-800 font-semibold">Thanh toán</span>
+            </div>
+
+            <h2 class="text-xl font-bold text-slate-900">Thanh toán đơn hàng</h2>
+
+            <!-- Desktop Two-Column / Mobile Single Column Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              
+              <!-- Left Column: Thông tin người nhận & Vận chuyển (lg:col-span-7) -->
+              <div class="lg:col-span-7 flex flex-col gap-4 order-2 lg:order-1">
+                
+                <!-- Form thông tin giao hàng -->
+                <div class="bg-white p-4 sm:p-5 rounded-2xl ring-1 ring-slate-200 shadow-sm flex flex-col gap-3">
+                  <h3 class="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                    <span class="flex size-5 items-center justify-center rounded-full bg-indigo-100 text-indigo-700 text-xs">1</span>
+                    Thông tin người nhận
+                  </h3>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div>
+                      <label class="block text-slate-600 font-medium mb-1">Họ và tên *</label>
+                      <input type="text" value="Nguyễn Văn A" class="w-full h-10 px-3 rounded-xl bg-slate-50 ring-1 ring-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                    </div>
+                    <div>
+                      <label class="block text-slate-600 font-medium mb-1">Số điện thoại *</label>
+                      <input type="text" value="0901234567" class="w-full h-10 px-3 rounded-xl bg-slate-50 ring-1 ring-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                    </div>
+                  </div>
+                  <div class="text-xs">
+                    <label class="block text-slate-600 font-medium mb-1">Địa chỉ nhận hàng *</label>
+                    <input type="text" value="123 Nguyễn Huệ, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh" class="w-full h-10 px-3 rounded-xl bg-slate-50 ring-1 ring-slate-200 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                  </div>
+                </div>
+
+                <!-- Phương thức vận chuyển -->
+                <div class="bg-white p-4 sm:p-5 rounded-2xl ring-1 ring-slate-200 shadow-sm flex flex-col gap-3">
+                  <h3 class="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                    <span class="flex size-5 items-center justify-center rounded-full bg-indigo-100 text-indigo-700 text-xs">2</span>
+                    Phương thức giao hàng
+                  </h3>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <!-- Standard -->
+                    <label onclick="setShipping('standard')" class="cursor-pointer flex items-center justify-between p-3 rounded-xl ring-2 ring-indigo-600 bg-indigo-50/50 text-xs transition">
+                      <div class="flex items-center gap-2">
+                        <input type="radio" name="shipping" checked class="text-indigo-600 focus:ring-indigo-500">
+                        <div>
+                          <p class="font-semibold text-slate-900">Giao tiêu chuẩn</p>
+                          <p class="text-[11px] text-slate-500">2-3 ngày làm việc</p>
+                        </div>
+                      </div>
+                      <span id="label-ship-standard" class="font-bold text-slate-800">30.000₫</span>
+                    </label>
+
+                    <!-- Express -->
+                    <label onclick="setShipping('express')" class="cursor-pointer flex items-center justify-between p-3 rounded-xl ring-1 ring-slate-200 bg-white text-xs hover:bg-slate-50 transition">
+                      <div class="flex items-center gap-2">
+                        <input type="radio" name="shipping" class="text-indigo-600 focus:ring-indigo-500">
+                        <div>
+                          <p class="font-semibold text-slate-900">Giao hỏa tốc</p>
+                          <p class="text-[11px] text-slate-500">Trong 24 giờ</p>
+                        </div>
+                      </div>
+                      <span class="font-bold text-slate-800">60.000₫</span>
+                    </label>
+                  </div>
+                  <p class="text-[11px] text-emerald-700 bg-emerald-50 px-2.5 py-1.5 rounded-lg border border-emerald-200">
+                    💡 <strong>Freeship:</strong> Đơn hàng từ 500.000₫ (tính trước khi trừ coupon) được miễn phí giao tiêu chuẩn.
+                  </p>
+                </div>
+
+              </div>
+
+              <!-- Right Column: Checkout Summary + COUPON DELTA COMPONENT (lg:col-span-5) -->
+              <div class="lg:col-span-5 flex flex-col gap-4 order-1 lg:order-2">
+                
+                <!-- CHECKOUT SUMMARY CARD -->
+                <aside class="flex flex-col gap-4 rounded-2xl bg-white p-4 sm:p-5 shadow-sm ring-1 ring-slate-200">
+                  <div class="flex items-center justify-between">
+                    <h3 class="text-base font-semibold text-slate-900">Đơn hàng của bạn</h3>
+                    <span class="text-xs text-slate-500 font-medium">2 sản phẩm</span>
+                  </div>
+
+                  <!-- Item List -->
+                  <ul class="flex flex-col gap-3">
+                    <li class="flex items-center gap-3 text-xs">
+                      <div class="relative w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center shrink-0 text-xl border border-slate-200">
+                        🎧
+                        <span class="absolute -top-1.5 -right-1.5 flex size-5 items-center justify-center rounded-full bg-slate-700 text-[10px] font-bold text-white shadow-xs">
+                          1
+                        </span>
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <p class="font-medium text-slate-800 truncate">Tai nghe Chống Ồn ANC-X1</p>
+                        <p class="text-[11px] text-slate-500">450.000₫ × 1</p>
+                      </div>
+                      <span class="font-semibold text-slate-900">450.000₫</span>
+                    </li>
+
+                    <li class="flex items-center gap-3 text-xs">
+                      <div class="relative w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center shrink-0 text-xl border border-slate-200">
+                        🔌
+                        <span class="absolute -top-1.5 -right-1.5 flex size-5 items-center justify-center rounded-full bg-slate-700 text-[10px] font-bold text-white shadow-xs">
+                          1
+                        </span>
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <p class="font-medium text-slate-800 truncate">Củ sạc Nhanh GaN 65W Pro</p>
+                        <p class="text-[11px] text-slate-500">150.000₫ × 1</p>
+                      </div>
+                      <span class="font-semibold text-slate-900">150.000₫</span>
+                    </li>
+                  </ul>
+
+                  <!-- ========================================================= -->
+                  <!-- [MỚI] KHỐI MÃ GIẢM GIÁ (COUPON DELTA COMPONENT)           -->
+                  <!-- Theo thiết kế DESIGN.md & EXPERIENCE.md                   -->
+                  <!-- ========================================================= -->
+                  <div class="border-t border-slate-200 pt-3 flex flex-col gap-2" id="coupon-widget">
+                    
+                    <div class="flex items-center justify-between">
+                      <label for="coupon-input" class="text-xs font-semibold text-slate-700 flex items-center gap-1.5">
+                        <svg class="size-3.5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                        Mã giảm giá
+                      </label>
+                      <span class="text-[10px] text-slate-400 font-mono">FR-1 • FR-3</span>
+                    </div>
+
+                    <!-- STATE A: INPUT FORM (Chưa áp dụng) -->
+                    <div id="coupon-input-group" class="flex flex-col gap-1.5">
+                      <div class="flex gap-2">
+                        <input 
+                          type="text" 
+                          id="coupon-input"
+                          placeholder="Nhập mã ưu đãi"
+                          autocomplete="off"
+                          autocapitalize="characters"
+                          class="flex-1 h-10 px-3 rounded-xl bg-slate-50 border-0 ring-1 ring-inset ring-slate-300 text-xs font-semibold tracking-wider uppercase placeholder:normal-case placeholder:font-normal placeholder:text-slate-400 text-slate-900 focus:ring-2 focus:ring-indigo-600 focus:bg-white focus:outline-none transition"
+                          oninput="handleInputChange(this)"
+                          onkeydown="if(event.key==='Enter'){event.preventDefault(); applyCoupon();}"
+                        >
+                        <button 
+                          type="button" 
+                          id="btn-apply-coupon"
+                          onclick="applyCoupon()"
+                          disabled
+                          class="h-10 px-4 rounded-xl font-medium text-xs bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition shrink-0 flex items-center justify-center min-w-[76px]"
+                        >
+                          <span id="apply-text">Áp dụng</span>
+                        </button>
+                      </div>
+
+                      <!-- Error Message Area (role="status" aria-live="polite") -->
+                      <div id="coupon-error-box" class="hidden flex items-start gap-1.5 text-xs text-rose-600 mt-0.5" role="status" aria-live="polite">
+                        <svg class="size-4 shrink-0 mt-0.5 fill-rose-100 text-rose-600" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                        </svg>
+                        <span id="coupon-error-msg" class="leading-tight">Mã giảm giá không hợp lệ. Vui lòng kiểm tra lại.</span>
+                      </div>
+                    </div>
+
+                    <!-- STATE B: APPLIED PILL (Đã áp dụng thành công) -->
+                    <div id="coupon-pill-group" class="hidden">
+                      <div class="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 ring-1 ring-emerald-200 text-xs">
+                        <div class="flex items-center gap-2 min-w-0">
+                          <span class="flex size-6 items-center justify-center rounded-lg bg-emerald-600 text-white shrink-0 text-xs font-bold">✓</span>
+                          <div class="min-w-0">
+                            <div class="flex items-center gap-1.5">
+                              <span id="pill-code" class="font-bold tracking-wider text-emerald-900 uppercase font-mono">GIAM50K</span>
+                              <span class="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-medium">Đã áp dụng</span>
+                            </div>
+                            <p id="pill-desc" class="text-[11px] text-emerald-700 truncate">Giảm ngay 50.000₫ cho đơn từ 200k</p>
+                          </div>
+                        </div>
+
+                        <!-- Remove Button -->
+                        <button 
+                          type="button" 
+                          onclick="removeCoupon()"
+                          aria-label="Gỡ mã giảm giá"
+                          title="Gỡ mã giảm giá"
+                          class="size-8 rounded-lg text-emerald-700 hover:text-emerald-900 hover:bg-emerald-100 flex items-center justify-center shrink-0 transition"
+                        >
+                          <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Hint / Demo tags -->
+                    <div class="flex items-center gap-1.5 text-[10px] text-slate-500 mt-1">
+                      <span>Mã thử nghiệm:</span>
+                      <button onclick="fillAndApply('GIAM50K')" class="underline hover:text-indigo-600 font-mono font-medium">GIAM50K</button>
+                      <span>•</span>
+                      <button onclick="fillAndApply('SHOPLITE10')" class="underline hover:text-indigo-600 font-mono font-medium">SHOPLITE10</button>
+                      <span>•</span>
+                      <button onclick="fillAndApply('TET2026')" class="underline hover:text-indigo-600 font-mono font-medium">TET2026</button>
+                    </div>
+
+                  </div>
+                  <!-- ========================================================= -->
+                  <!-- HẾT KHỐI MÃ GIẢM GIÁ                                      -->
+                  <!-- ========================================================= -->
+
+                  <!-- PRICING SUMMARY (dl) -->
+                  <dl class="flex flex-col gap-2 border-t border-slate-200 pt-3 text-xs">
+                    
+                    <!-- Subtotal -->
+                    <div class="flex justify-between items-center">
+                      <dt class="text-slate-600">Tạm tính</dt>
+                      <dd id="summary-subtotal" class="font-medium text-slate-900">600.000₫</dd>
+                    </div>
+
+                    <!-- [MỚI] Discount Row (Ẩn khi chưa có coupon) -->
+                    <div id="summary-discount-row" class="hidden flex justify-between items-center text-emerald-700 font-semibold bg-emerald-50/60 -mx-2 px-2 py-1 rounded-lg">
+                      <dt class="flex items-center gap-1">
+                        <span id="summary-discount-label">Giảm giá (GIAM50K)</span>
+                      </dt>
+                      <dd id="summary-discount-amount" class="tabular-nums">-50.000₫</dd>
+                    </div>
+
+                    <!-- Shipping Fee -->
+                    <div class="flex justify-between items-center">
+                      <dt class="text-slate-600 flex items-center gap-1">
+                        Phí giao hàng
+                        <span id="badge-freeship" class="text-[10px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-medium">Freeship ≥500k</span>
+                      </dt>
+                      <dd id="summary-shipping" class="font-medium text-slate-900">Miễn phí</dd>
+                    </div>
+
+                    <!-- Total -->
+                    <div class="flex justify-between items-center border-t border-slate-200 pt-2.5 text-sm sm:text-base">
+                      <dt class="font-bold text-slate-900">Tổng thanh toán</dt>
+                      <dd id="summary-total" class="font-bold text-indigo-700 tabular-nums">550.000₫</dd>
+                    </div>
+                  </dl>
+
+                  <!-- Place Order Button -->
+                  <button 
+                    type="button" 
+                    onclick="placeOrderDemo()"
+                    class="w-full h-11 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-semibold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2"
+                  >
+                    <span>Đặt hàng ngay</span>
+                    <svg class="size-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                  </button>
+
+                  <p class="text-[11px] text-center text-slate-400">
+                    🔒 Cam kết tính giá lại 100% tại server • Không sợ gian lận
+                  </p>
+                </aside>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ============================================== -->
+          <!-- VIEW 2: TRANG CHI TIẾT ĐƠN HÀNG (/orders/[id]) -->
+          <!-- ============================================== -->
+          <div id="view-orders" class="p-4 flex-1 hidden flex-col gap-4">
+            
+            <button onclick="toggleView('checkout')" class="flex items-center gap-1 text-xs font-medium text-slate-600 hover:text-indigo-600 w-fit">
+              <svg class="size-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+              Quay lại màn Thanh toán
+            </button>
+
+            <!-- Success Banner -->
+            <div class="flex items-start gap-3 rounded-2xl bg-emerald-50 p-4 text-emerald-900 ring-1 ring-emerald-200 text-xs">
+              <svg class="size-5 shrink-0 text-emerald-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <div>
+                <p class="font-bold text-sm">Đặt hàng thành công!</p>
+                <p class="mt-0.5 text-slate-600">Mã đơn hàng: <strong class="font-mono text-slate-900">ORD-20261121-8842</strong>. Đã khóa snapshot giá và mã giảm giá.</p>
+              </div>
+            </div>
+
+            <!-- Order Header -->
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-base font-bold text-slate-900">Đơn hàng ORD-20261121-8842</h2>
+                <p class="text-[11px] text-slate-500">Đặt lúc 21/11/2026 11:25 • COD</p>
+              </div>
+              <span class="rounded-full bg-amber-50 text-amber-700 ring-1 ring-amber-200 text-[11px] font-semibold px-2.5 py-1">
+                Chờ xác nhận
+              </span>
+            </div>
+
+            <!-- Order Items & Invoice Breakdown -->
+            <section class="rounded-2xl bg-white p-4 shadow-sm ring-1 ring-slate-200 text-xs flex flex-col gap-3">
+              <h3 class="font-semibold text-slate-900 text-sm">Sản phẩm đã mua</h3>
+              
+              <ul class="divide-y divide-slate-100">
+                <li class="py-2.5 flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">🎧</span>
+                    <div>
+                      <p class="font-medium text-slate-800">Tai nghe Chống Ồn ANC-X1</p>
+                      <p class="text-[11px] text-slate-500">450.000₫ × 1</p>
+                    </div>
+                  </div>
+                  <span class="font-semibold">450.000₫</span>
+                </li>
+                <li class="py-2.5 flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="text-base">🔌</span>
+                    <div>
+                      <p class="font-medium text-slate-800">Củ sạc Nhanh GaN 65W Pro</p>
+                      <p class="text-[11px] text-slate-500">150.000₫ × 1</p>
+                    </div>
+                  </div>
+                  <span class="font-semibold">150.000₫</span>
+                </li>
+              </ul>
+
+              <!-- Final Calculation including COUPON IMMUTABLE SNAPSHOT -->
+              <dl class="border-t border-slate-200 pt-3 flex flex-col gap-1.5 text-xs">
+                <div class="flex justify-between text-slate-600">
+                  <dt>Tạm tính</dt>
+                  <dd class="font-medium text-slate-900">600.000₫</dd>
+                </div>
+
+                <!-- [MỚI] Hiển thị mã coupon đã chốt trong đơn hàng -->
+                <div id="order-detail-coupon-row" class="flex justify-between text-emerald-700 font-semibold bg-emerald-50/70 -mx-1 px-1.5 py-0.5 rounded">
+                  <dt class="flex items-center gap-1">
+                    <span>Mã giảm giá (<span id="order-detail-code">GIAM50K</span>)</span>
+                  </dt>
+                  <dd id="order-detail-discount">-50.000₫</dd>
+                </div>
+
+                <div class="flex justify-between text-slate-600">
+                  <dt>Phí giao hàng (Tiêu chuẩn)</dt>
+                  <dd class="font-medium text-slate-900">Miễn phí</dd>
+                </div>
+
+                <div class="flex justify-between border-t border-slate-200 pt-2 text-sm font-bold text-slate-900">
+                  <dt>Tổng cộng thực trả</dt>
+                  <dd id="order-detail-total" class="text-indigo-700">550.000₫</dd>
+                </div>
+              </dl>
+            </section>
+
+          </div>
+
+          <!-- Bottom Footer -->
+          <footer class="mt-auto py-3 px-4 border-t border-slate-200 bg-white text-center text-[11px] text-slate-400">
+            ShopLite Demo • Next.js 16 + React 19 + Tailwind v4
+          </footer>
+
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Interactive Logic Script -->
+  <script>
+    // State
+    const state = {
+      subtotal: 600000,
+      shippingMethod: 'standard',
+      coupon: null, // { code, type, value, minOrder, discount }
+      appliedCode: null,
+      viewport: 'mobile'
+    };
+
+    // Coupons catalog mock (tuân thủ coupons.ts)
+    const COUPONS = {
+      'GIAM50K': { code: 'GIAM50K', type: 'fixed', value: 50000, minOrder: 200000, desc: 'Giảm 50.000₫ cho đơn từ 200k' },
+      'SHOPLITE10': { code: 'SHOPLITE10', type: 'percent', value: 10, minOrder: 0, maxDiscount: 100000, desc: 'Giảm 10% tối đa 100k' },
+      'TET2026': { code: 'TET2026', type: 'fixed', value: 100000, minOrder: 1000000, desc: 'Giảm 100.000₫ cho đơn từ 1.000.000₫' },
+      'EXPIRED': { code: 'EXPIRED', expired: true, desc: 'Mã đã hết hạn' }
+    };
+
+    function formatVND(amount) {
+      return new Intl.NumberFormat('vi-VN').format(amount) + '₫';
+    }
+
+    function handleInputChange(input) {
+      input.value = input.value.toUpperCase();
+      const val = input.value.trim();
+      const btn = document.getElementById('btn-apply-coupon');
+      btn.disabled = val.length === 0;
+
+      // Clear error on edit
+      const errBox = document.getElementById('coupon-error-box');
+      if (!errBox.classList.contains('hidden')) {
+        errBox.classList.add('hidden');
+        input.classList.remove('ring-rose-500', 'bg-rose-50/30');
+        input.classList.add('ring-slate-300');
+      }
+    }
+
+    function applyCoupon() {
+      const input = document.getElementById('coupon-input');
+      const code = input.value.trim().toUpperCase();
+      if (!code) return;
+
+      const found = COUPONS[code];
+      const errBox = document.getElementById('coupon-error-box');
+      const errMsg = document.getElementById('coupon-error-msg');
+
+      if (!found) {
+        showError('Mã giảm giá không hợp lệ. Vui lòng kiểm tra lại.');
+        return;
+      }
+
+      if (found.expired) {
+        showError('Mã giảm giá đã hết hạn sử dụng.');
+        return;
+      }
+
+      if (found.minOrder && state.subtotal < found.minOrder) {
+        const diff = found.minOrder - state.subtotal;
+        showError(`Đơn hàng chưa đạt tối thiểu ${formatVND(found.minOrder)} (cần mua thêm ${formatVND(diff)}).`);
+        return;
+      }
+
+      // Valid coupon! Calculate discount
+      let discount = 0;
+      if (found.type === 'fixed') {
+        discount = Math.min(found.value, state.subtotal);
+      } else if (found.type === 'percent') {
+        const raw = Math.round((state.subtotal * found.value) / 100);
+        discount = found.maxDiscount ? Math.min(raw, found.maxDiscount) : raw;
+      }
+
+      state.coupon = { ...found, discount };
+      state.appliedCode = code;
+
+      // UI Update
+      document.getElementById('coupon-input-group').classList.add('hidden');
+      document.getElementById('coupon-pill-group').classList.remove('hidden');
+      document.getElementById('pill-code').innerText = code;
+      document.getElementById('pill-desc').innerText = found.desc;
+
+      recalculate();
+    }
+
+    function removeCoupon() {
+      state.coupon = null;
+      state.appliedCode = null;
+
+      document.getElementById('coupon-input').value = '';
+      document.getElementById('btn-apply-coupon').disabled = true;
+      document.getElementById('coupon-input-group').classList.remove('hidden');
+      document.getElementById('coupon-pill-group').classList.add('hidden');
+
+      const errBox = document.getElementById('coupon-error-box');
+      errBox.classList.add('hidden');
+
+      recalculate();
+    }
+
+    function showError(msg) {
+      const input = document.getElementById('coupon-input');
+      const errBox = document.getElementById('coupon-error-box');
+      const errMsg = document.getElementById('coupon-error-msg');
+
+      errMsg.innerText = msg;
+      errBox.classList.remove('hidden');
+      input.classList.remove('ring-slate-300');
+      input.classList.add('ring-rose-500', 'bg-rose-50/30');
+    }
+
+    function setShipping(method) {
+      state.shippingMethod = method;
+      recalculate();
+    }
+
+    function recalculate() {
+      // Shipping: standard is 30k (free if subtotal >= 500k), express is 60k
+      let shippingFee = 0;
+      if (state.shippingMethod === 'standard') {
+        shippingFee = state.subtotal >= 500000 ? 0 : 30000;
+      } else {
+        shippingFee = 60000;
+      }
+
+      const discount = state.coupon ? state.coupon.discount : 0;
+      const total = Math.max(0, state.subtotal - discount) + shippingFee;
+
+      // Update summary
+      document.getElementById('summary-subtotal').innerText = formatVND(state.subtotal);
+      
+      const discountRow = document.getElementById('summary-discount-row');
+      if (discount > 0 && state.coupon) {
+        discountRow.classList.remove('hidden');
+        document.getElementById('summary-discount-label').innerText = `Giảm giá (${state.coupon.code})`;
+        document.getElementById('summary-discount-amount').innerText = `-${formatVND(discount)}`;
+      } else {
+        discountRow.classList.add('hidden');
+      }
+
+      document.getElementById('summary-shipping').innerText = shippingFee === 0 ? 'Miễn phí' : formatVND(shippingFee);
+      document.getElementById('summary-total').innerText = formatVND(total);
+
+      // Synchronize Orders view if open
+      if (state.coupon) {
+        document.getElementById('order-detail-coupon-row').classList.remove('hidden');
+        document.getElementById('order-detail-code').innerText = state.coupon.code;
+        document.getElementById('order-detail-discount').innerText = `-${formatVND(discount)}`;
+      } else {
+        document.getElementById('order-detail-coupon-row').classList.add('hidden');
+      }
+      document.getElementById('order-detail-total').innerText = formatVND(total);
+    }
+
+    function fillAndApply(code) {
+      removeCoupon();
+      const input = document.getElementById('coupon-input');
+      input.value = code;
+      handleInputChange(input);
+      applyCoupon();
+    }
+
+    function setScenario(sc) {
+      // Reset button styles
+      ['idle', 'giam50k', 'shoplite10', 'err-min', 'err-inv'].forEach(id => {
+        const btn = document.getElementById(`btn-sc-${id}`);
+        if (btn) {
+          btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-700 text-slate-200 hover:bg-slate-600 transition';
+        }
+      });
+      const activeBtn = document.getElementById(`btn-sc-${sc}`);
+      if (activeBtn) {
+        activeBtn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white shadow-sm transition';
+      }
+
+      toggleView('checkout');
+
+      if (sc === 'idle') {
+        removeCoupon();
+      } else if (sc === 'giam50k') {
+        fillAndApply('GIAM50K');
+      } else if (sc === 'shoplite10') {
+        fillAndApply('SHOPLITE10');
+      } else if (sc === 'err-min') {
+        removeCoupon();
+        const input = document.getElementById('coupon-input');
+        input.value = 'TET2026';
+        handleInputChange(input);
+        applyCoupon();
+      } else if (sc === 'err-inv') {
+        removeCoupon();
+        const input = document.getElementById('coupon-input');
+        input.value = 'KHONGTONTAI';
+        handleInputChange(input);
+        applyCoupon();
+      }
+    }
+
+    function toggleView(viewName) {
+      const vCheckout = document.getElementById('view-checkout');
+      const vOrders = document.getElementById('view-orders');
+      const btnViewOrders = document.getElementById('btn-view-orders');
+
+      if (viewName === 'orders') {
+        vCheckout.classList.add('hidden');
+        vOrders.classList.remove('hidden');
+        btnViewOrders.innerText = '🛒 Xem Trang Thanh Toán';
+        btnViewOrders.onclick = () => toggleView('checkout');
+      } else {
+        vCheckout.classList.remove('hidden');
+        vOrders.classList.add('hidden');
+        btnViewOrders.innerText = '📄 Xem Trang Đơn Hàng';
+        btnViewOrders.onclick = () => toggleView('orders');
+      }
+    }
+
+    function placeOrderDemo() {
+      toggleView('orders');
+    }
+
+    function setViewport(mode) {
+      state.viewport = mode;
+      const wrapper = document.getElementById('viewport-wrapper');
+      const device = document.getElementById('device-container');
+      const topBar = document.getElementById('mobile-top-bar');
+      const btnMob = document.getElementById('vp-mobile');
+      const btnDesk = document.getElementById('vp-desktop');
+
+      if (mode === 'desktop') {
+        wrapper.className = 'w-full max-w-5xl transition-all duration-300';
+        device.className = 'rounded-2xl overflow-hidden bg-slate-50 border border-slate-300 shadow-xl transition-all duration-300';
+        topBar.classList.add('hidden');
+        btnDesk.className = 'px-3 py-1 rounded-lg bg-indigo-600 text-white font-medium shadow-sm transition flex items-center gap-1.5';
+        btnMob.className = 'px-3 py-1 rounded-lg hover:text-white font-medium transition flex items-center gap-1.5';
+      } else {
+        wrapper.className = 'w-[390px] transition-all duration-300';
+        device.className = 'device-frame rounded-[42px] overflow-hidden bg-slate-50 border-4 border-slate-800 transition-all duration-300';
+        topBar.classList.remove('hidden');
+        btnMob.className = 'px-3 py-1 rounded-lg bg-indigo-600 text-white font-medium shadow-sm transition flex items-center gap-1.5';
+        btnDesk.className = 'px-3 py-1 rounded-lg hover:text-white font-medium transition flex items-center gap-1.5';
+      }
+    }
+
+    // Init
+    setScenario('idle');
+  </script>
+</body>
+</html>

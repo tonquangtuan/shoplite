@@ -2,17 +2,22 @@ import { ProductImage } from "@/features/catalog/components/product-image";
 import type { CartItem } from "@/features/cart/types";
 import { calculateOrderTotals, type ShippingMethod } from "@/features/checkout/pricing";
 import { formatCurrency } from "@/lib/format";
+import type { Coupon } from "@/features/coupons/types";
 
 interface CheckoutSummaryProps {
   items: CartItem[];
   shippingMethod: ShippingMethod;
+  coupon?: Coupon | null;
+  discountAmount?: number;
 }
 
-export function CheckoutSummary({ items, shippingMethod }: CheckoutSummaryProps) {
+export function CheckoutSummary({ items, shippingMethod, coupon, discountAmount = 0 }: CheckoutSummaryProps) {
   const totals = calculateOrderTotals(
     items.map((item) => ({ unitPrice: item.price, quantity: item.quantity })),
     shippingMethod,
   );
+
+  const finalTotal = Math.max(0, totals.total - discountAmount);
 
   return (
     <aside className="flex h-fit flex-col gap-4 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
@@ -42,10 +47,19 @@ export function CheckoutSummary({ items, shippingMethod }: CheckoutSummaryProps)
             {totals.shippingFee === 0 ? "Miễn phí" : formatCurrency(totals.shippingFee)}
           </dd>
         </div>
+        
+        {/* Hiển thị dòng giảm giá nếu có */}
+        {discountAmount > 0 && (
+          <div className="flex justify-between text-emerald-600">
+            <dt>Giảm giá ({coupon?.code})</dt>
+            <dd className="font-medium">-{formatCurrency(discountAmount)}</dd>
+          </div>
+        )}
+        
         <div className="flex justify-between border-t border-slate-200 pt-3 text-base">
           <dt className="font-semibold">Tổng thanh toán</dt>
           <dd className="font-bold text-indigo-700" data-testid="checkout-total">
-            {formatCurrency(totals.total)}
+            {formatCurrency(finalTotal)}
           </dd>
         </div>
       </dl>
