@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:   # cho phép bấm chạy tay
+
+jobs:
+  build:
+    runs-on: [self-hosted, linux, x64, shoplite]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test runner
+        run: |
+          echo "Hello from shoplite-runner"
+          uname -a
